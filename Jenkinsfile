@@ -1,38 +1,20 @@
 pipeline {
     agent any
-
+    environment {
+        ARGOCD_SERVER = 'http://localhost:8081'
+        ARGOCD_USER = 'admin'
+        ARGOCD_PASSWORD = 'Password@123'
+    }
     stages {
-        stage('Checkout Code') {
+        stage('Sync ArgoCD') {
             steps {
-                git url: 'https://github.com/your-username/your-repo.git', branch: 'main'
-            }
-        }
-
-        stage('Update Manifests (Optional)') {
-            steps {
-                echo 'Make changes to manifests if needed'
-                // for example: update image version dynamically
-            }
-        }
-
-        stage('Push Changes to GitHub') {
-            steps {
-                sh '''
-                git config --global user.email "you@example.com"
-                git config --global user.name "Your Name"
-                git add .
-                git commit -m "Automated commit from Jenkins"
-                git push origin main
-                '''
-            }
-        }
-
-        stage('Notify ArgoCD (Optional but Recommended)') {
-            steps {
-                echo 'Trigger ArgoCD to Sync immediately'
-                sh '''
-                curl -k -H "Authorization: Bearer <ARGOCD_AUTH_TOKEN>" -X POST https://localhost:8081/api/v1/applications/my-app/sync
-                '''
+                script {
+                    // ArgoCD Sync Command
+                    sh '''
+                    curl -X POST -u $ARGOCD_USER:$ARGOCD_PASSWORD \
+                    $ARGOCD_SERVER/api/v1/applications/simple-argocd-demo/sync
+                    '''
+                }
             }
         }
     }
