@@ -10,3 +10,4 @@ Flow:
 2. Jenkins triggers pipeline.
 3. ArgoCD syncs and deploys to cluster.
 
+# ArgoCd test
