@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/RIYAG09/simple-argocd-demo.git' , branch: 'main'
+        git 'https://github.com/RIYAG09/simple-argocd-demo.git'
       }
     }
 
