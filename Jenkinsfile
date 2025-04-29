@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    ARGOCD_SERVER = "localhost:8080"
+    ARGOCD_SERVER = "host.docker.internal:8081"
   }
 
   stages {
